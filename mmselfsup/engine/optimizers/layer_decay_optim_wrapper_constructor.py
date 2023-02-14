@@ -60,17 +60,48 @@ def get_layer_id_for_swin(var_name: str, max_layer_id: int,
         return max_layer_id - 1
 
 
+def get_layer_id_for_mixmim(var_name: str, max_layer_id: int,
+                            depths: List[int]) -> int:
+    """Get the layer id to set the different learning rates for MixMIM.
+
+    The layer is from 1 to max_layer_id (e.g. 25)
+    Args:
+        var_name (str): The key of the model.
+        num_max_layer (int): Maximum number of backbone layers.
+        depths (List[int]): Depths for each stage.
+    Returns:
+        int: Returns the layer id of the key.
+    """
+
+    if 'patch_embed' in var_name:
+        return -1
+    elif 'absolute_pos_embed' in var_name:
+        return -1
+    elif 'pos_embed' in var_name:
+        return -1
+    elif var_name.startswith('backbone.layers'):
+        layer_id = int(var_name.split('.')[2])
+        block_id = var_name.split('.')[4]
+
+        if block_id == 'downsample' or \
+                block_id == 'reduction' or \
+                block_id == 'norm':
+            return sum(depths[:layer_id + 1]) - 1
+
+        layer_id = sum(depths[:layer_id]) + int(block_id) + 1
+        return layer_id - 1
+    else:
+        return max_layer_id - 2
+
+
 @OPTIM_WRAPPER_CONSTRUCTORS.register_module()
 class LearningRateDecayOptimWrapperConstructor(DefaultOptimWrapperConstructor):
     """Different learning rates are set for different layers of backbone.
 
     Note: Currently, this optimizer constructor is built for ViT and Swin.
 
-    In addition to applying layer-wise learning rate decay schedule, this
-    module will not apply weight decay to ``normalization parameters``,
-    ``bias``, ``position embedding``, ``class token``, and
-    ``relative position bias table, automatically. What's more, the
-    ``paramwise_cfg`` in the base module will be ignored.
+    In addition to applying layer-wise learning rate decay schedule, the
+    paramwise_cfg only supports weight decay customization.
     """
 
     def add_params(self, params: List[dict], module: nn.Module,
@@ -87,14 +118,27 @@ class LearningRateDecayOptimWrapperConstructor(DefaultOptimWrapperConstructor):
             optimizer_cfg (dict): The configuration of optimizer.
             prefix (str): The prefix of the module.
         """
+        # get param-wise options
+        custom_keys = self.paramwise_cfg.get('custom_keys', {})
+        # first sort with alphabet order and then sort with reversed len of str
+        sorted_keys = sorted(sorted(custom_keys.keys()), key=len, reverse=True)
+
+        # get logger
         logger = MMLogger.get_current_instance()
+        logger.warning(
+            'LearningRateDecayOptimWrapperConstructor is refactored in '
+            'v1.0.0rc4, which need to configure zero weight decay manually. '
+            'The previous versions would set zero weight decay according to '
+            'the dimension of parameter. Please specify weight decay settings '
+            'of different layers in config if needed.')
 
         # Check if self.param_cfg is not None
         if len(self.paramwise_cfg) > 0:
-            logger.info('The paramwise_cfg will be ignored, and normalization \
-                parameters, bias, position embedding, class token and \
-                    relative position bias table will not be decayed by \
-                        default.')
+            logger.info(
+                'The paramwise_cfg only supports weight decay customization '
+                'in LearningRateDecayOptimWrapperConstructor, please indicate '
+                'the specific weight decay settings of different layers in '
+                'config if needed.')
 
         model_type = optimizer_cfg.pop('model_type', None)
         # model_type should not be None
@@ -103,38 +147,45 @@ class LearningRateDecayOptimWrapperConstructor(DefaultOptimWrapperConstructor):
 
         # currently, we only support layer-wise learning rate decay for vit
         # and swin.
-        assert model_type in ['vit', 'swin'], f'Currently, we do not support \
+        assert model_type in ['vit', 'swin',
+                              'mixmim'], f'Currently, we do not support \
             layer-wise learning rate decay for {model_type}'
 
         if model_type == 'vit':
             num_layers = len(module.backbone.layers) + 2
         elif model_type == 'swin':
             num_layers = sum(module.backbone.depths) + 2
+        elif model_type == 'mixmim':
+            num_layers = sum(module.backbone.depths) + 1
 
-        weight_decay = self.base_wd
         # if layer_decay_rate is not provided, not decay
         decay_rate = optimizer_cfg.pop('layer_decay_rate', 1.0)
         parameter_groups = {}
 
+        assert self.base_wd is not None
         for name, param in module.named_parameters():
             if not param.requires_grad:
                 continue  # frozen weights
-            # will not decay normalization params, bias, position embedding
-            # class token, relative position bias table
-            if len(param.shape) == 1 or name.endswith('.bias') or name in (
-                    'backbone.pos_embed', 'backbone.cls_token'
-            ) or 'relative_position_bias_table' in name:
+
+            this_weight_decay = self.base_wd
+            for key in sorted_keys:
+                if key in name:
+                    decay_mult = custom_keys[key].get('decay_mult', 1.)
+                    this_weight_decay = self.base_wd * decay_mult
+
+            if this_weight_decay == 0:
                 group_name = 'no_decay'
-                this_weight_decay = 0.
             else:
                 group_name = 'decay'
-                this_weight_decay = weight_decay
 
             if model_type == 'vit':
                 layer_id = get_layer_id_for_vit(name, num_layers)
             elif model_type == 'swin':
                 layer_id = get_layer_id_for_swin(name, num_layers,
                                                  module.backbone.depths)
+            elif model_type == 'mixmim':
+                layer_id = get_layer_id_for_mixmim(name, num_layers,
+                                                   module.backbone.depths)
 
             group_name = f'layer_{layer_id}_{group_name}'
             if group_name not in parameter_groups:

@@ -65,15 +65,19 @@ MMSelfSup 是一个基于 PyTorch 实现的开源自监督表征学习工具箱�
 
 ## 更新
 
-**v1.0.0rc3** 版本已经在 2022.11.01 发布。
+**默认分支已经从 `master` 切换到 `1.x`。我们鼓励用户迁移到最新版本，请参考 [迁移指南](https://mmselfsup.readthedocs.io/zh_CN/1.x/migration.html) 以了解更多细节。**
 
-- 支持 MaskFeat
-- 更新配置文件和文档
+**v1.0.0rc6** 版本已经在 2023.2.10 发布。
 
-**v1.0.0rc2** 版本已经在 2022.10.12 发布。
+- 在 `projects/maskfeat_video/` 支持了 `MaskFeat` 的视频数据预训练
+- 将部分文档翻译成中文
 
-- `MAE`, `SimMIM`, `MoCoV3` 算法模型的全量支持（支持多种模型尺寸和预训练轮次）。
-- 更新文档以及教程
+**v1.0.0rc5** 版本已经在 2022.12.30 发布。
+
+- 支持了 `BEiT v2`, `MixMIM`, `EVA`
+- 支持了模型分析工具 `ShapeBias`
+- 添加 FGIA ACCV 2022 比赛第一名方案
+- 重构了 `t-SNE`
 
 请参考 [更新日志](https://mmselfsup.readthedocs.io/zh_CN/dev-1.x/notes/changelog.html) 获取更多细节和历史版本信息。
 
@@ -123,17 +127,22 @@ Useful Tools
 - [x] [ODC (CVPR'2020)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/odc)
 - [x] [MoCo v1 (CVPR'2020)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/mocov1)
 - [x] [SimCLR (ICML'2020)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/simclr)
-- [x] [MoCo v2 (ArXiv'2020)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/byol)
+- [x] [MoCo v2 (arXiv'2020)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/byol)
 - [x] [BYOL (NeurIPS'2020)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/mocov2)
 - [x] [SwAV (NeurIPS'2020)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/swav)
 - [x] [DenseCL (CVPR'2021)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/densecl)
 - [x] [SimSiam (CVPR'2021)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/simsiam)
 - [x] [Barlow Twins (ICML'2021)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/barlowtwins)
 - [x] [MoCo v3 (ICCV'2021)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/mocov3)
+- [x] [BEiT (ICLR'2022)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/beit)
 - [x] [MAE (CVPR'2022)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/mae)
 - [x] [SimMIM (CVPR'2022)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/simmim)
 - [x] [MaskFeat (CVPR'2022)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/maskfeat)
-- [x] [CAE (ArXiv'2022)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/cae)
+- [x] [CAE (arXiv'2022)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/cae)
+- [x] [MILAN (arXiv'2022)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/milan)
+- [x] [BEiT v2 (arXiv'2022)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/beitv2)
+- [x] [EVA (arXiv'2022)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/eva)
+- [x] [MixMIM (ArXiv'2022)](https://github.com/open-mmlab/mmselfsup/tree/dev-1.x/configs/selfsup/mixmim)
 
 更多的算法实现已经在我们的计划中。
 

@@ -55,6 +55,7 @@ class MAEPretrainDecoder(BaseModule):
                  decoder_num_heads: int = 16,
                  mlp_ratio: int = 4,
                  norm_cfg: dict = dict(type='LN', eps=1e-6),
+                 predict_feature_dim: Optional[float] = None,
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
         super().__init__(init_cfg=init_cfg)
         self.num_patches = num_patches
@@ -85,8 +86,10 @@ class MAEPretrainDecoder(BaseModule):
         self.add_module(self.decoder_norm_name, decoder_norm)
 
         # Used to map features to pixels
+        if predict_feature_dim is None:
+            predict_feature_dim = patch_size**2 * in_chans
         self.decoder_pred = nn.Linear(
-            decoder_embed_dim, patch_size**2 * in_chans, bias=True)
+            decoder_embed_dim, predict_feature_dim, bias=True)
 
     def init_weights(self) -> None:
         """Initialize position embedding and mask token of MAE decoder."""
@@ -102,6 +105,7 @@ class MAEPretrainDecoder(BaseModule):
 
     @property
     def decoder_norm(self):
+        """The normalization layer of decoder."""
         return getattr(self, self.decoder_norm_name)
 
     def forward(self, x: torch.Tensor,
@@ -178,6 +182,7 @@ class ClsBatchNormNeck(BaseModule):
     def forward(
             self,
             inputs: Tuple[List[torch.Tensor]]) -> Tuple[List[torch.Tensor]]:
+        """The forward function."""
         # Only apply batch norm to cls token, which is the second tensor in
         # each item of the tuple
         inputs = [[input_[0], self.bn(input_[1])] for input_ in inputs]

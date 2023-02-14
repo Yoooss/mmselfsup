@@ -2,6 +2,121 @@
 
 ## MMSelfSup
 
+### v1.0.0rc6 (10/02/2023)
+
+`master` 仍然是 0.x 版本，我们将会 checkout 一个新的 `1.x` 用来发布 1.x 版本。 未来我们会同时维护两个版本。
+
+我们简要的列出主要的改变。 请参考[迁移文档](../migration.md)来查看细节和迁移指引
+
+#### 亮点
+
+- 在 `projects/maskfeat_video/` 支持了 `MaskFeat` 视频数据集的预训练
+- 将部分文档翻译为中文
+
+#### 新特性
+
+- 在 `projects/maskfeat_video/` 支持了 `MaskFeat` 视频数据集的预训练 ([#678](https://github.com/open-mmlab/mmselfsup/pull/678))
+
+#### Bug 修复
+
+- 修复 `shape bias` 分布式训练的问题 ([#689](https://github.com/open-mmlab/mmselfsup/pull/689))
+- 更新 BEiT v2 的链接 ([#676](https://github.com/open-mmlab/mmselfsup/pull/676))
+- 修复传参时未指定参数的问题 ([#654](https://github.com/open-mmlab/mmselfsup/pull/654))
+- 更新 `default_runtime.py` 文件 ([#681](https://github.com/open-mmlab/mmselfsup/pull/681))
+- 将 `metafile.yaml` 重命名为 `metafile.yml` ([#680](https://github.com/open-mmlab/mmselfsup/pull/680))
+- 修复 `configs/selfsup/eva/metafile.yml` 中的问题 ([#669](https://github.com/open-mmlab/mmselfsup/pull/669))
+
+#### 改进
+
+- 默认分支修改为 1.x ([#686](https://github.com/open-mmlab/mmselfsup/pull/686))
+- 更新 pre-commit ([#685](https://github.com/open-mmlab/mmselfsup/pull/685))
+- 暂停 python 3.6 的支持 ([#657](https://github.com/open-mmlab/mmselfsup/pull/657))
+
+#### 文档
+
+- 翻译 add_transforms.md 和 conventions.md ([#674](https://github.com/open-mmlab/mmselfsup/pull/674))
+- 翻译 classification.md, detection.md, segmentation.md ([#665](https://github.com/open-mmlab/mmselfsup/pull/665))
+- 更新 KNN 脚本的链接 ([#661](https://github.com/open-mmlab/mmselfsup/pull/661))
+- 翻译两篇文档 ([#653](https://github.com/open-mmlab/mmselfsup/pull/653))
+- 翻译三篇文档 ([#651](https://github.com/open-mmlab/mmselfsup/pull/651))
+
+### v1.0.0rc5 (30/12/2022)
+
+`master` 仍然是 0.x 版本，我们将会 checkout 一个新的 `1.x` 用来发布 1.x 版本。 未来我们会同时维护两个版本。
+
+我们简要的列出主要的改变。 请参考[迁移文档](../migration.md)来查看细节和迁移指引
+
+#### 亮点
+
+- 支持了 `BEiT v2`, `MixMIM`, `EVA`
+- 支持了模型分析工具 `ShapeBias`
+- 增加 FGIA ACCV 2022 第一名解决方案
+- 重构 t-SNE
+
+#### 新特性
+
+- 支持了 `BEiT v2` ([#627](https://github.com/open-mmlab/mmselfsup/pull/627))
+- 支持了 `MixMIM` ([#626](https://github.com/open-mmlab/mmselfsup/pull/626))
+- 支持了 `EVA` ([#632](https://github.com/open-mmlab/mmselfsup/pull/632))
+- 支持了 `ShapeBias` 评价方式 ([#635](https://github.com/open-mmlab/mmselfsup/pull/635))
+- 增加模型转换脚本和指引 ([#621](https://github.com/open-mmlab/mmselfsup/pull/621))
+- 增加 FGIA 比赛预训练方案 ([#607](https://github.com/open-mmlab/mmselfsup/pull/607))
+
+#### Bug 修复
+
+- 将 `pseudo_collect` 改为 `default_collect` ([#616](https://github.com/open-mmlab/mmselfsup/pull/616))
+- 修复 SimMIM 链接问题 ([#622](https://github.com/open-mmlab/mmselfsup/pull/622))
+- 修改 `map_location` 为 `cpu` ([#623](https://github.com/open-mmlab/mmselfsup/pull/623))
+  修复 import 问题 ([#631](https://github.com/open-mmlab/mmselfsup/pull/631))
+- 修复配置文件字段问题 ([#630](https://github.com/open-mmlab/mmselfsup/pull/630))
+- 修改 `np.int` 为 `int` ([#636](https://github.com/open-mmlab/mmselfsup/pull/636))
+- 修复 knn 多卡 bug ([#634](https://github.com/open-mmlab/mmselfsup/pull/634))
+
+#### 改进
+
+- 重构 `projects/` 文件夹 ([#620](https://github.com/open-mmlab/mmselfsup/pull/620))
+- 重构 `t-SNE` ([#629](https://github.com/open-mmlab/mmselfsup/pull/629))
+- 基于 `target_generator` 重构 `CAE` ([#645](https://github.com/open-mmlab/mmselfsup/pull/645))
+- 重构回归测试相关内容 ([#637](https://github.com/open-mmlab/mmselfsup/pull/637))
+
+#### 文档
+
+- 更新 data_flow.md 文档 ([#612](https://github.com/open-mmlab/mmselfsup/pull/612))
+- 更新 datasets.md 文档 ([#633](https://github.com/open-mmlab/mmselfsup/pull/633))
+
+### v1.0.0rc4 (07/12/2022)
+
+`master` 仍然是 0.x 版本，我们将会 checkout 一个新的 `1.x` 用来发布 1.x 版本。 未来我们会同时维护两个版本。
+
+我们简要的列出主要的改变。 请参考[迁移文档](../migration.md)来查看细节和迁移指引
+
+#### Highlight
+
+- 支持 `BEiT` 和 `MILAN`
+- 支持 low-level 重建可视化
+
+#### New Features
+
+- 支持 `BEiT` ([#425](https://github.com/open-mmlab/mmselfsup/pull/425))
+- 支持 `MILAN` ([#600](https://github.com/open-mmlab/mmselfsup/pull/600))
+- 支持 low-level 重建可视化 ([#570](https://github.com/open-mmlab/mmselfsup/pull/570))
+
+#### Bug Fixes
+
+- 修复数据预处理潜在的注册问题 ([#603](https://github.com/open-mmlab/mmselfsup/pull/603))
+- 修复代码依赖和字段错误 ([#611](https://github.com/open-mmlab/mmselfsup/pull/611))
+
+#### Improvements
+
+- 重构 file io ([#582](https://github.com/open-mmlab/mmselfsup/pull/582)))
+- 增加 './projects' 文件夹和示例 ([#586](https://github.com/open-mmlab/mmselfsup/pull/586)))
+- 更新 CI 和 UT ([#601](https://github.com/open-mmlab/mmselfsup/pull/601)))
+
+#### Docs
+
+- 更新 readthedocs 和菜单栏 ([#572](https://github.com/open-mmlab/mmselfsup/pull/572))
+- 增加 readthedocs 算法页面并修复部分渲染错误 ([#599](https://github.com/open-mmlab/mmselfsup/pull/599))
+
 ### v1.0.0rc2 (12/10/2022)
 
 `master` 仍然是 0.x 版本，我们将会 checkout 一个新的 `1.x` 用来发布 1.x 版本。 未来我们会同时维护两个版本。
