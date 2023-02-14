@@ -1,0 +1,1 @@
+bash ./tools/benchmarks/mmdetection/mim_dist_train_fpn.sh configs/benchmarks/mmdetection/voc0712/faster_rcnn_swin_fpn_voc0712ls_iter_grid_num.py /home/ls/mmselfsupv1/work_dirs/selfsup/densecl_resnet50_8xb32-coslr-200e_in1k_swin_pred_grid_num/20221213_161335_grid1/epoch_200.pth 1

@@ -1,7 +1,7 @@
 # dataset settings
+custom_imports = dict(imports='mmcls.datasets', allow_failed_imports=False)
 dataset_type = 'mmcls.ImageNet'
-#image_set_path = '/media/ls/disk1/DOTA/VOCdevkit/VOC2007/ImageSets'
-data_root =  '/media/ls/disk1/NWPU VHR-10 dataset 3/imagenet/' #'data/imagenet/'
+data_root = 'data/imagenet/'
 file_client_args = dict(backend='disk')
 
 # The difference between mocov2 and mocov1 is the transforms in the pipeline
