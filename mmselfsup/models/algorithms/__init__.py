@@ -26,9 +26,7 @@ from .densecl_pred import DenseLs
 __all__ = [
     'BaseModel', 'BarlowTwins', 'BYOL', 'DeepCluster', 'DenseCL', 'MoCo',
     'NPID', 'ODC', 'RelativeLoc', 'RotationPred', 'SimCLR', 'SimSiam', 'SwAV',
-    'MAE', 'MoCoV3', 'SimMIM', 'CAE', 'MaskFeat','DenseLs'
-    'BaseModel', 'BarlowTwins', 'BEiT', 'BYOL', 'DeepCluster', 'DenseCL',
-    'MoCo', 'NPID', 'ODC', 'RelativeLoc', 'RotationPred', 'SimCLR', 'SimSiam',
-    'SwAV', 'MAE', 'MoCoV3', 'SimMIM', 'CAE', 'MaskFeat', 'MILAN', 'EVA',
+    'MAE', 'MoCoV3', 'SimMIM', 'CAE', 'MaskFeat','DenseLs','BEiT', 
+    'MILAN', 'EVA',
     'MixMIM'
 ]

@@ -19,9 +19,7 @@ __all__ = [
     'ContrastiveHead', 'ClsHead', 'LatentPredictHead',
     'LatentCrossCorrelationHead', 'MultiClsHead', 'MAEPretrainHead',
     'MoCoV3Head', 'SimMIMHead', 'CAEHead', 'SwAVHead', 'MaskFeatPretrainHead',
-    'DenseCLHeadLs'
-    'BEiTV1Head', 'BEiTV2Head', 'ContrastiveHead', 'ClsHead',
-    'LatentPredictHead', 'LatentCrossCorrelationHead', 'MultiClsHead',
-    'MAEPretrainHead', 'MoCoV3Head', 'SimMIMHead', 'CAEHead', 'SwAVHead',
-    'MaskFeatPretrainHead', 'MILANPretrainHead', 'MixMIMPretrainHead'
+    'DenseCLHeadLs',
+    'BEiTV1Head', 'BEiTV2Head',
+    'MILANPretrainHead', 'MixMIMPretrainHead',
 ]
