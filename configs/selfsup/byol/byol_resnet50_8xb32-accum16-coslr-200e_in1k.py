@@ -21,4 +21,4 @@ optim_wrapper = dict(
 )
 
 # runtime settings
-default_hooks = dict(checkpoint=dict(max_keep_ckpts=3))
+default_hooks = dict(checkpoint=dict(max_keep_ckpts=1))

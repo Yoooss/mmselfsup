@@ -20,7 +20,7 @@ model = dict(
         in_channels=2048,
         hid_channels=2048,
         out_channels=128,
-        num_grid=7),
+        num_grid=4),
     head=dict(
         type='ContrastiveHead',
         loss=dict(type='mmcls.CrossEntropyLoss'),

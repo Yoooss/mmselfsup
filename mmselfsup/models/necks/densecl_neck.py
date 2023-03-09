@@ -65,6 +65,7 @@ class DenseCLNeck(BaseModule):
 
         if self.with_pool:
             x = self.pool(x)  # sxs
+        #x_sim = x.view(x.size(0), x.size(1), -1) #ls
         x = self.mlp2(x)  # sxs: bxdxsxs
         avgpooled_x2 = self.avgpool2(x)  # 1x1: bxdx1x1
         x = x.view(x.size(0), x.size(1), -1)  # bxdxs^2

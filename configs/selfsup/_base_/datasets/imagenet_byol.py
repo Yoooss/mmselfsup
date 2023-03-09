@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'mmcls.ImageNet'
-data_root = 'data/imagenet/'
+data_root = '/media/ls/disk1/NWPU VHR-10 dataset 3/imagenet/' #'data/imagenet/'
 file_client_args = dict(backend='disk')
 
 view_pipeline1 = [

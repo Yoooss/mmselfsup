@@ -162,9 +162,15 @@ class DenseLs(BaseModel):
         assert isinstance(inputs, list)
         im_q = inputs[0]
         im_k = inputs[1]
+
+        # ls 0302
+        #self.poolsim = nn.AdaptiveAvgPool2d((4, 4))# ls 0302 ((num_grid, num_grid))
+
         # compute query features
         q_b = self.backbone(im_q)  # backbone features
+        #q_sim = self.poolsim(q_b[0])   # ls 0302
         q, q_grid, q2 = self.neck(q_b)  # queries: NxC; NxCxS^2
+        #q, q_grid, q2  = self.neck(q_b)  
         q_b = q_b[0]
         # print(im_q.shape)
         # print("q_b:",q_b.shape)
@@ -189,6 +195,7 @@ class DenseLs(BaseModel):
             im_k, idx_unshuffle = batch_shuffle_ddp(im_k)
 
             k_b = self.encoder_k.module[0](im_k)  # backbone features
+            #k_sim = self.poolsim(k_b[0])       # ls 0302
             k, k_grid, k2 = self.encoder_k.module[1](k_b)  # keys: NxC; NxCxS^2
             k_b = k_b[0]
             k_b = k_b.view(k_b.size(0), k_b.size(1), -1)
@@ -212,6 +219,9 @@ class DenseLs(BaseModel):
         l_neg = torch.einsum('nc,ck->nk', [q, self.queue.clone().detach()])
 
         # feat point set sim
+        #q_sim = q_sim.view(q_sim.size(0), q_sim.size(1), -1) 
+        #k_sim = k_sim.view(k_sim.size(0), k_sim.size(1), -1)
+        #backbone_sim_matrix = torch.matmul(q_sim.permute(0, 2, 1), k_sim)
         backbone_sim_matrix = torch.matmul(q_b.permute(0, 2, 1), k_b)
         densecl_sim_ind = backbone_sim_matrix.max(dim=2)[1]  # NxS^2 相似度矩阵按相似度大小排序 然后取出索引
 

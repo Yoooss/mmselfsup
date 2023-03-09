@@ -28,10 +28,10 @@ model = dict(
     target_generator=dict(
         type='CLIPGenerator',
         tokenizer_path=  # noqa
-        'https://download.openmmlab.com/mmselfsup/1.x/target_generator_ckpt/clip_vit_base_16.pth.tar'  # noqa
+        "/media/ls/disk1/checkpoint/clip_vit_base_16.pth.tar"#'https://download.openmmlab.com/mmselfsup/1.x/target_generator_ckpt/clip_vit_base_16.pth.tar'  # noqa
     ),
     init_cfg=None)
 
 # dataset 16 x 256
-train_dataloader = dict(batch_size=256, num_workers=16)
+train_dataloader = dict(batch_size=16, num_workers=8) #num_workers=16
 find_unused_parameters = True
